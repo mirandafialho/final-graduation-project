@@ -179,7 +179,7 @@
           </nav>
         </div>
         <div class="flex flex-shrink-0 bg-gray-700 p-4">
-          <a href="#" class="group block w-full flex-shrink-0">
+          <a @click="logout" class="group block w-full flex-shrink-0">
             <div class="flex items-center">
               <div>
                 <img class="inline-block h-9 w-9 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
@@ -217,8 +217,23 @@
 </template>
 
 <script>
+import LoginService from '../services/LoginService'
+
 export default {
-  name: 'DashboardView'
+  name: 'DashboardView',
+  methods: {
+    logout() {
+      LoginService.logout()
+        .then(response => {
+          console.log(response)
+          localStorage.clear()
+          this.$router.push({ name: 'Home' })
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  }
 }
 
 </script>
