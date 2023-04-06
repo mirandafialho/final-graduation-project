@@ -23,7 +23,7 @@ class AuthController extends Controller
                 'password' => $request->password,
             ]);
 
-            return response()->json($response->body());
+            return response()->json($response->json());
         } catch (BadResponseException $exception) {
             match ($exception->getCode()) {
                 400     => $message = 'Invalid Request. Please enter a username or a password.',
