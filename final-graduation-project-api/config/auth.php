@@ -23,11 +23,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     'passwords' => [
@@ -40,5 +35,4 @@ return [
     ],
 
     'password_timeout' => 10800,
-
 ];
