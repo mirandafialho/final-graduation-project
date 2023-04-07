@@ -6,12 +6,11 @@ use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Response;
-use Illuminate\Http\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
 {
-    public function handle(Request $request, Closure $next, ...$guards): Response|RedirectResponse
+    public function handle(Request $request, Closure $next, string ...$guards): Response
     {
         $guards = empty($guards) ? [null] : $guards;
 

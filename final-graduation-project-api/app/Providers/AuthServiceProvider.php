@@ -8,7 +8,7 @@ class AuthServiceProvider extends ServiceProvider
 {
     protected $policies = [];
 
-    public function boot()
+    public function boot(): void
     {
         $this->registerPolicies();
     }

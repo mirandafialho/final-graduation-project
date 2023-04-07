@@ -7,15 +7,15 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
-    protected array $levels = [
+    protected $levels = [
         //
     ];
 
-    protected array $dontReport = [
+    protected $dontReport = [
         //
     ];
 
-    protected array $dontFlash = [
+    protected $dontFlash = [
         'current_password',
         'password',
         'password_confirmation',
