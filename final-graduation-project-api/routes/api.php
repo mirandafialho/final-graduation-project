@@ -16,5 +16,10 @@ Route::middleware('auth:api')->post('/logout', [AuthController::class, 'logout']
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/service-catalogues', [ServiceCatalogueController::class, 'index']);
+    Route::post('/service-catalogues', [ServiceCatalogueController::class, 'store']);
+    Route::get('/service-catalogues/{id}', [ServiceCatalogueController::class, 'show']);
+    Route::put('/service-catalogues/{id}', [ServiceCatalogueController::class, 'update']);
+    Route::delete('/service-catalogues/{id}', [ServiceCatalogueController::class, 'destroy']);
+    
     Route::get('/service-level-agreements', [ServiceLevelAgreementController::class, 'index']);
 });

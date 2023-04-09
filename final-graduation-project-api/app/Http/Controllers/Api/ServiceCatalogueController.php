@@ -8,58 +8,50 @@ use Illuminate\Http\Request;
 
 class ServiceCatalogueController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return ServiceCatalogue::all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $serviceCatalogue = ServiceCatalogue::query()->create($request->all());
+
+        return response()->json($serviceCatalogue);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ServiceCatalogue  $serviceCatalogue
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ServiceCatalogue $serviceCatalogue)
+    public function show(int $id)
     {
-        //
+        try {
+            $serviceCatalogue = ServiceCatalogue::query()->findOrFail($id);
+
+            return response()->json($serviceCatalogue);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json($exception->message, 404);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ServiceCatalogue  $serviceCatalogue
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ServiceCatalogue $serviceCatalogue)
+    public function update(Request $request, int $id)
     {
-        //
+        try {
+            $serviceCatalogue = ServiceCatalogue::query()->findOrFail($id);
+
+            $serviceCatalogue->update($request->all());
+
+            return response()->json($serviceCatalogue);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json($exception->message, 404);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ServiceCatalogue  $serviceCatalogue
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ServiceCatalogue $serviceCatalogue)
+    public function destroy(int $id)
     {
-        //
+        try {
+            ServiceCatalogue::query()->findOrFail($id)->delete();
+
+            return response()->json(['status' => true, 'message' => 'deleted']);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json($exception->message, 404);
+        }
     }
 }
