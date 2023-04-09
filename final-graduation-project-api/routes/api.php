@@ -22,4 +22,8 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/service-catalogues/{id}', [ServiceCatalogueController::class, 'destroy']);
     
     Route::get('/service-level-agreements', [ServiceLevelAgreementController::class, 'index']);
+    Route::post('/service-level-agreements', [ServiceLevelAgreementController::class, 'store']);
+    Route::get('/service-level-agreements/{id}', [ServiceLevelAgreementController::class, 'show']);
+    Route::put('/service-level-agreements/{id}', [ServiceLevelAgreementController::class, 'update']);
+    Route::delete('/service-level-agreements/{id}', [ServiceLevelAgreementController::class, 'destroy']);
 });

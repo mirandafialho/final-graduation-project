@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ServiceCatalogue;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ServiceCatalogueController extends Controller
 {
@@ -27,7 +28,7 @@ class ServiceCatalogueController extends Controller
 
             return response()->json($serviceCatalogue);
         } catch (ModelNotFoundException $exception) {
-            return response()->json($exception->message, 404);
+            return response()->json(['message' => $exception->getMessage()], 404);
         }
     }
 
@@ -40,7 +41,7 @@ class ServiceCatalogueController extends Controller
 
             return response()->json($serviceCatalogue);
         } catch (ModelNotFoundException $exception) {
-            return response()->json($exception->message, 404);
+            return response()->json(['message' => $exception->getMessage()], 404);
         }
     }
 
@@ -51,7 +52,7 @@ class ServiceCatalogueController extends Controller
 
             return response()->json(['status' => true, 'message' => 'deleted']);
         } catch (ModelNotFoundException $exception) {
-            return response()->json($exception->message, 404);
+            return response()->json(['message' => $exception->getMessage()], 404);
         }
     }
 }
