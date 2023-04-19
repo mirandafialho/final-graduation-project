@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ticket_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->string('title');
             $table->text('description');
             $table->timestamps();
