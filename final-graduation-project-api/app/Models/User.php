@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -18,6 +18,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'current_department_id',
     ];
 
     protected $hidden = [
@@ -29,9 +30,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function department(): HasOne
+    public function department(): BelongsTo
     {
-        return $this->hasOne(Department::class, 'current_department_id');
+        return $this->belongsTo(Department::class, 'current_department_id');
     }
 
     public function departments(): BelongsToMany

@@ -10,6 +10,8 @@ class Department extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_department', 'department_id', 'user_id');
