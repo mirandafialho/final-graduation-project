@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ServiceCatalogueController;
 use App\Http\Controllers\Api\ServiceLevelAgreementController;
+use App\Http\Controllers\Api\DepartmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,10 +21,16 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/service-catalogues/{id}', [ServiceCatalogueController::class, 'show']);
     Route::put('/service-catalogues/{id}', [ServiceCatalogueController::class, 'update']);
     Route::delete('/service-catalogues/{id}', [ServiceCatalogueController::class, 'destroy']);
-    
+
     Route::get('/service-level-agreements', [ServiceLevelAgreementController::class, 'index']);
     Route::post('/service-level-agreements', [ServiceLevelAgreementController::class, 'store']);
     Route::get('/service-level-agreements/{id}', [ServiceLevelAgreementController::class, 'show']);
     Route::put('/service-level-agreements/{id}', [ServiceLevelAgreementController::class, 'update']);
     Route::delete('/service-level-agreements/{id}', [ServiceLevelAgreementController::class, 'destroy']);
+
+    Route::get('departments', [DepartmentController::class, 'index']);
+    Route::get('departments/{id}', [DepartmentController::class, 'show']);
+    Route::post('departments', [DepartmentController::class, 'store']);
+    Route::put('departments/{id}', [DepartmentController::class, 'update']);
+    Route::delete('departments/{id}', [DepartmentController::class, 'destroy']);
 });
