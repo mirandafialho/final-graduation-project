@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ReportFactory extends Factory
 {
-    public function definition()
+    public function definition(): array
     {
         return [
             'ticket_id' => Ticket::factory(),
