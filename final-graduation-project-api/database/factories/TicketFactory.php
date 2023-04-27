@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Department;
+use App\Models\ServiceCatalogue;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,7 +17,7 @@ class TicketFactory extends Factory
             'ticket' => '#' . $this->faker->year . $this->faker->randomNumber(3),
             'client_id' => User::factory(),
             'user_id' => User::factory(),
-            'service_catalogues_id' => ServiceCatalog::factory(),
+            'service_catalogues_id' => ServiceCatalogue::factory(),
             'department_id' => Department::factory(),
             'subject' => $this->faker->sentence,
             'description' => $this->faker->paragraph(2),
