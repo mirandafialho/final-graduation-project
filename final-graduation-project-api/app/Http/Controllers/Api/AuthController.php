@@ -39,7 +39,10 @@ class AuthController extends Controller
     {
         auth()->user()->tokens->each(fn ($token, $key) => $token->delete());
 
-        return response()->json('Logout successfully!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Logout successfully!',
+        ]);
     }
 
     public function register(Request $request): JsonResponse

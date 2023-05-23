@@ -15,7 +15,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::middleware('auth:api')->post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('tickets', [TicketController::class, 'index']);
@@ -47,4 +46,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('departments', [DepartmentController::class, 'store']);
     Route::put('departments/{id}', [DepartmentController::class, 'update']);
     Route::delete('departments/{id}', [DepartmentController::class, 'destroy']);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
