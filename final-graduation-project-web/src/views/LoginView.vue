@@ -44,7 +44,7 @@
 
 
 <script>
-import LoginService from '../services/LoginService'
+import LoginService from '@/services/LoginService'
 
 export default {
   name: 'LoginView',
@@ -65,10 +65,10 @@ export default {
         .then(response => {
           const token = response.data.access_token
           localStorage.setItem('access_token', token)
-          this.$router.push({ name: 'Dashboard' })
+          this.$router.push({ name: 'ServiceDesk' })
         })
-        .catch(e => {
-          console.log(e)
+        .catch(exception => {
+          console.log(exception)
         })
     }
   }

@@ -3,15 +3,25 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import AboutView from '@/views/AboutView.vue'
-import DashboardView from '@/views/DashboardView.vue'
-import ClientsView from '@/views/ClientsView.vue'
-import CatalogServicesView from '@/views/CatalogServicesView.vue'
+import ServiceDeskView from '@/views/ServiceDesk/ServiceDeskView.vue'
+import ClientsView from '@/views/Clients/ClientsView.vue'
+import CatalogServicesView from '@/views/CatalogServices/CatalogServicesView.vue'
+import TicketsView from '@/views/Tickets/TicketsView.vue'
+import DepartmentsView from '@/views/Departments/DepartmentsView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: HomeView,
+    meta: {
+      isAuthenticated: false
+    }
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: AboutView,
     meta: {
       isAuthenticated: false
     }
@@ -25,9 +35,9 @@ const routes = [
     }
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: DashboardView,
+    path: '/service-desk',
+    name: 'ServiceDesk',
+    component: ServiceDeskView,
     meta: {
       isAuthenticated: true
     }
@@ -49,13 +59,21 @@ const routes = [
     }
   },
   {
-    path: '/about',
-    name: 'About',
-    component: AboutView,
+    path: '/tickets',
+    name: 'Tickets',
+    component: TicketsView,
     meta: {
-      isAuthenticated: false
+      isAuthenticated: true
     }
-  }
+  },
+  {
+    path: '/departments',
+    name: 'Departments',
+    component: DepartmentsView,
+    meta: {
+      isAuthenticated: true
+    }
+  },
 ]
 
 const router = createRouter({
