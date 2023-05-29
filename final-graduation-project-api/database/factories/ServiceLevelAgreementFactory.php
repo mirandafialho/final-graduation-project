@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ServiceLevelAgreementFactory extends Factory
 {
-    public function definition()
+    public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
-            'description' => $this->faker->paragraph(2),
-            'response_time' => $this->faker->randomNumber(2, false),
-            'resolution_time' => $this->faker->randomNumber(3, false),
-            'available' => $this->faker->randomElement(['24x7', '8x5']),
-            'priority' => $this->faker->randomElement(['critical', 'urgent', 'normal']),
+            'name'            => fake()->name,
+            'description'     => fake()->paragraph(2),
+            'response_time'   => fake()->randomNumber(2, false),
+            'resolution_time' => fake()->randomNumber(3, false),
+            'available'       => fake()->randomElement(['24x7', '8x5']),
+            'priority'        => fake()->randomElement(['critical', 'urgent', 'normal']),
         ];
     }
 }

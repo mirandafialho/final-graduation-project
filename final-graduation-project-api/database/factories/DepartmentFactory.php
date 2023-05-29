@@ -9,8 +9,8 @@ class DepartmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'   => $this->faker->name,
-            'active' => $this->faker->boolean
+            'name'   => fake()->word,
+            'active' => fake()->boolean
         ];
     }
 }

@@ -11,10 +11,10 @@ class ReportFactory extends Factory
     public function definition(): array
     {
         return [
-            'ticket_id' => Ticket::factory(),
-            'user_id' => User::factory(),
-            'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph(2)
+            'ticket_id'   => Ticket::factory(),
+            'user_id'     => User::factory(),
+            'title'       => fake()->sentence,
+            'description' => fake()->paragraph(2),
         ];
     }
 }

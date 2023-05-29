@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ServiceCatalogueFactory extends Factory
 {
-    public function definition()
+    public function definition(): array
     {
         return [
             'service_level_agreement_id' => ServiceLevelAgreement::factory(),
-            'name' => $this->faker->name,
-            'description' => $this->faker->paragraph(2)
+            'name'                       => fake()->word,
+            'description'                => fake()->paragraph(2)
         ];
     }
 }
