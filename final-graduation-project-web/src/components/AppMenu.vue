@@ -178,11 +178,11 @@
     InboxStackIcon,
     UsersIcon,
     UserIcon
-  } from '@heroicons/vue/24/outline'
-  import LoginService from '@/services/LoginService';
+  } from "@heroicons/vue/24/outline"
+  import LoginService from "@/services/LoginService"
 
   export default {
-    name: 'AppMenu',
+    name: "AppMenu",
     components: {
       ArrowLeftOnRectangleIcon,
       HomeModernIcon,
@@ -198,7 +198,7 @@
           .then(response => {
             console.log(response)
             localStorage.clear()
-            this.$router.push({ name: 'Home' })
+            setInterval(() => this.$router.push({ name: "Home" }), 500)
           })
           .catch(error => {
             console.log(error)

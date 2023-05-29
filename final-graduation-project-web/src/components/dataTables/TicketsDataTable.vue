@@ -2,11 +2,13 @@
   <section class="container px-4 mx-auto mt-8">
     <div class="sm:flex sm:items-center sm:justify-between">
       <div class="flex items-center mt-4 gap-x-3">
-        <button class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-white transition-colors duration-200 bg-primary border border-primary rounded-lg gap-x-2 sm:w-auto">
-          <PlusIcon class="h-5 w-5 flex-shrink-0" />
+        <a @click="showTicketsModal">
+          <button class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-white transition-colors duration-200 bg-primary border border-primary rounded-lg gap-x-2 sm:w-auto">
+            <PlusIcon class="h-5 w-5 flex-shrink-0" />
 
-          <span>Cadastrar</span>
-        </button>
+            <span>Cadastrar</span>
+          </button>
+        </a>
       </div>
 
       <div class="relative flex items-center mt-4 md:mt-0">
@@ -305,6 +307,10 @@
       </div>
     </div>
   </section>
+  <tickets-modal
+    :show="showModal"
+    @close="showModal = false"
+  />
 </template>
 
 <script>
@@ -313,15 +319,27 @@
     ArrowLeftIcon,
     ChevronDownIcon,
     PlusIcon
-  } from '@heroicons/vue/24/outline'
+  } from "@heroicons/vue/24/outline"
+  import TicketsModal from "@/components/modals/TicketsModal"
 
   export default {
-    name: 'DataTable',
+    name: "TicketsDataTable",
     components: {
+      TicketsModal,
       ArrowRightIcon,
       ArrowLeftIcon,
       ChevronDownIcon,
       PlusIcon
+    },
+    data() {
+      return {
+        showModal: false,
+      }
+    },
+    methods: {
+      showTicketsModal() {
+        this.showModal = true
+      }
     }
   }
 </script>

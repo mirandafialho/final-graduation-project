@@ -62,14 +62,8 @@ export default {
       }
 
       LoginService.login(data)
-        .then(response => {
-          const token = response.data.access_token
-          localStorage.setItem('access_token', token)
-          this.$router.push({ name: 'ServiceDesk' })
-        })
-        .catch(exception => {
-          console.log(exception)
-        })
+
+      setInterval(() => this.$router.push({ name: "ServiceDesk" }), 500)
     }
   }
 }

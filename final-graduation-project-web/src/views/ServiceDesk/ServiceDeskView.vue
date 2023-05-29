@@ -25,11 +25,11 @@
 </template>
 
 <script>
-  import Menu from '@/components/AppMenu.vue'
-  import ServiceDeskBoard from './ServiceDeskBoard.vue'
+  import Menu from "@/components/AppMenu.vue"
+  import ServiceDeskBoard from "./ServiceDeskBoard.vue"
 
   export default {
-    name: 'ServiceDeskView',
+    name: "ServiceDeskView",
     components: {
       Menu,
       ServiceDeskBoard
