@@ -1,6 +1,10 @@
 <template>
   <Transition name="modal">
-    <div v-if="show" class="modal-mask">
+    <div
+        v-if="show"
+        class="modal-mask"
+        @click.self="$emit('close')"
+    >
       <div class="modal-container">
         <div class="modal-header">
           <h2 class="text-2xl font-semibold text-gray-900">
@@ -14,7 +18,7 @@
                 <strong>Catálogo de Serviço</strong>
               </label>
               <div class="mt-2">
-                <select v-model="serviceCatalogId" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6">
+                <select v-model="serviceCatalog" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6">
                   <option v-for="item in serviceCatalogues" :value="item" :key="item.id">
                     {{ item.name }}
                   </option>
@@ -27,7 +31,7 @@
                 <strong>Departamento</strong>
               </label>
               <div class="mt-2">
-                <select v-model="departmentId" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6">
+                <select v-model="department" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6">
                   <option v-for="item in departments" :value="item" :key="item.id">
                     {{ item.name }}
                   </option>
@@ -55,19 +59,18 @@
 
             <div class="mb-4">
               <label class="block text-sm font-medium leading-6 text-gray-900">
-                <strong>Data de Início</strong>
-              </label>
-              <div class="mt-2">
-                <input v-model="dateStart" type="date" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" required />
-              </div>
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-sm font-medium leading-6 text-gray-900">
                 <strong>Prazo de Encerramento</strong>
               </label>
               <div class="mt-2">
-                <input v-model="dateEnd" type="date" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" required />
+                <VueDatePicker
+                    :model-value="dateEnd"
+                    locale="pt-BR"
+                    :min-date="new Date()"
+                    :format-locale="localization"
+                    :format="dateFormat"
+                    @update:model-value="setDateEnd"
+                    placeholder="Selecione a data prevista de encerramento"
+                />
               </div>
             </div>
           </div>
@@ -96,25 +99,39 @@
 
 <script>
 import TicketService from "@/services/TicketService"
+import VueDatePicker from "@vuepic/vue-datepicker"
+import "@vuepic/vue-datepicker/dist/main.css"
+import { ptBR } from "date-fns/locale"
 
 export default {
   props: {
-    show: Boolean
+    show: Boolean,
+  },
+  components: {
+    VueDatePicker,
   },
   data() {
     return {
       clientId: null,
       clients: [],
-      serviceCatalogId: null,
+      serviceCatalog: null,
       serviceCatalogues: [],
-      departmentId: null,
+      department: null,
       departments: [],
       subject: null,
       description: null,
       status: "open",
-      dateStart: null,
+      dateStart: this.formatDate(new Date()),
       dateEnd: null,
       user: null,
+      localization: ptBR,
+      dateFormat: (date) => {
+        const day = this.inputZeroToDate(date.getDate());
+        const month = this.inputZeroToDate(date.getMonth() + 1);
+        const year = date.getFullYear();
+
+        return `A data selecionada é ${day}/${month}/${year}`;
+      }
     }
   },
   beforeMount() {
@@ -140,7 +157,54 @@ export default {
       this.departments = response.data
     },
     newTicket() {
-      console.log(this)
+      const response = TicketService.create({
+        ticket: this.createTicketNumber(),
+        customer_id: 1,
+        service_catalogue_id: this.serviceCatalog.id,
+        department_id: this.department.id,
+        subject: this.subject,
+        description: this.description,
+        status: "open",
+        date_start: this.dateStart,
+        date_end: this.dateEnd,
+        user_id: this.user.id,
+      })
+
+      if (response.status === 200) {
+        this.$emit("ticket-created", true)
+
+        return
+      }
+
+      this.$emit("ticket-created", false)
+    },
+    getRandomInt(max) {
+      return Math.floor(Math.random() * max);
+    },
+    setDateEnd(value) {
+      this.dateEnd = value
+      if (value !== null) {
+        this.dateEnd = this.formatDate(value)
+      }
+    },
+    formatDate(date) {
+      return date.getFullYear() + "-" +
+          this.inputZeroToDate(date.getMonth() + 1) + "-" +
+          this.inputZeroToDate(date.getDate()) + " " +
+          this.inputZeroToDate(date.getHours()) + ":" +
+          this.inputZeroToDate(date.getMinutes())
+    },
+    createTicketNumber() {
+      const date = new Date()
+      return "#" + date.getFullYear() +
+          this.inputZeroToDate(date.getMonth() + 1) +
+          this.inputZeroToDate(date.getDate()) +
+          this.inputZeroToDate(date.getHours()) +
+          this.inputZeroToDate(date.getMinutes()) +
+          this.getRandomInt(9)
+    },
+    inputZeroToDate(number) {
+      return number < 10 ? "0" + number : number
     }
   }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Exception;
 use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,8 +24,12 @@ class AuthController extends Controller
                 'password' => $request->password,
             ]);
 
+            if ($response->status() !== 200) {
+                throw new Exception(code: $response->status());
+            }
+
             return response()->json($response->json());
-        } catch (BadResponseException $exception) {
+        } catch (Exception $exception) {
             match ($exception->getCode()) {
                 400     => $message = 'Invalid Request. Please enter a username or a password.',
                 401     => $message = 'Your credentials are incorrect. Please try again.',

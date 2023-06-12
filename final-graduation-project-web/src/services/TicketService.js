@@ -13,8 +13,24 @@ class TicketService {
         return await http.get("/departments")
     }
 
+    list() {
+        return http.get("/tickets")
+    }
+
+    view(id) {
+        return http.get("/tickets/" + id)
+    }
+
     create(data) {
         return http.post("/tickets", data)
+    }
+
+    update(data, id) {
+        return http.put("/tickets/" + id, data)
+    }
+
+    delete(id) {
+        return http.delete("/tickets/" + id)
     }
 }
 
