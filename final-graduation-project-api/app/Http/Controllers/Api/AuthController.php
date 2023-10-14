@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Exception;
-use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -36,13 +35,16 @@ class AuthController extends Controller
                 default => $message = 'Something went wrong on the server.',
             };
 
-            return response()->json($message, $exception->getCode());
+            return response()->json([
+                'success' => false,
+                'message' => $message,
+            ], $exception->getCode() ?: 500);
         }
     }
 
     public function logout(): JsonResponse
     {
-        auth()->user()->tokens->each(fn ($token, $key) => $token->delete());
+        auth()->user()->tokens->each(fn ($token) => $token->delete());
 
         return response()->json([
             'success' => true,

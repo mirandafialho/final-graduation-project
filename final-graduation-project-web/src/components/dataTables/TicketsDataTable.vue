@@ -107,7 +107,7 @@
   } from "@heroicons/vue/24/outline"
   import TicketsModal from "@/components/modals/TicketsModal"
   import TicketService from "@/services/TicketService"
-  import AppPagination from "@/components/AppPagination.vue";
+  import AppPagination from "@/components/AppPagination"
 
   export default {
     name: "TicketsDataTable",
