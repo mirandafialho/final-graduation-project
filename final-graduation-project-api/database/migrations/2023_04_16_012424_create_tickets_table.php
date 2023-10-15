@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('ticket');
             $table->foreignId('client_id')->constrained('users');
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('service_catalogues_id')->constrained();
+            $table->foreignId('service_catalogue_id')->constrained();
             $table->foreignId('department_id')->constrained();
             $table->string('subject');
             $table->text('description');

@@ -4,13 +4,14 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class DepartmentFactory extends Factory
+class CustomerFactory extends Factory
 {
     public function definition(): array
     {
         return [
-            'name'   => fake()->word,
-            'active' => fake()->boolean
+            'name'  => fake()->name,
+            'email' => fake()->email,
+            'phone' => fake()->phoneNumber,
         ];
     }
 }

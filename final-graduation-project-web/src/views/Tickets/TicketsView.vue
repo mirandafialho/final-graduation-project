@@ -25,15 +25,15 @@
 </template>
 
 <script>
-  import Menu from '@/components/AppMenu.vue'
-  import TicketsDataTable from './TicketsDataTable.vue'
+  import Menu from "@/components/AppMenu"
+  import TicketsDataTable from "@/components/dataTables/TicketsDataTable"
 
   export default {
-    name: 'TicketsView',
+    name: "TicketsView",
     components: {
       Menu,
       TicketsDataTable
-    }
+    },
   }
 </script>
 

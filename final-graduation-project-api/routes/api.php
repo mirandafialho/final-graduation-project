@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\TicketController;
 use App\Http\Controllers\Api\ServiceCatalogueController;
@@ -46,6 +47,12 @@ Route::middleware('auth:api')->group(function () {
     Route::post('departments', [DepartmentController::class, 'store']);
     Route::put('departments/{id}', [DepartmentController::class, 'update']);
     Route::delete('departments/{id}', [DepartmentController::class, 'destroy']);
+
+    Route::get('customers', [CustomerController::class, 'index']);
+    Route::get('customers/{id}', [CustomerController::class, 'show']);
+    Route::post('customers', [CustomerController::class, 'store']);
+    Route::put('customers/{id}', [CustomerController::class, 'update']);
+    Route::delete('customers/{id}', [CustomerController::class, 'destroy']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

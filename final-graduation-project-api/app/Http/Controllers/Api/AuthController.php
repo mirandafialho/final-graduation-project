@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use GuzzleHttp\Exception\BadResponseException;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -23,21 +23,28 @@ class AuthController extends Controller
                 'password' => $request->password,
             ]);
 
+            if ($response->status() !== 200) {
+                throw new Exception(code: $response->status());
+            }
+
             return response()->json($response->json());
-        } catch (BadResponseException $exception) {
+        } catch (Exception $exception) {
             match ($exception->getCode()) {
                 400     => $message = 'Invalid Request. Please enter a username or a password.',
                 401     => $message = 'Your credentials are incorrect. Please try again.',
                 default => $message = 'Something went wrong on the server.',
             };
 
-            return response()->json($message, $exception->getCode());
+            return response()->json([
+                'success' => false,
+                'message' => $message,
+            ], $exception->getCode() ?: 500);
         }
     }
 
     public function logout(): JsonResponse
     {
-        auth()->user()->tokens->each(fn ($token, $key) => $token->delete());
+        auth()->user()->tokens->each(fn ($token) => $token->delete());
 
         return response()->json([
             'success' => true,
