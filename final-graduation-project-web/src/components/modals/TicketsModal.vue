@@ -135,7 +135,7 @@ export default {
     }
   },
   beforeMount() {
-    this.getClients()
+    this.getCustomers()
     this.getServiceCatalogues()
     this.getDepartments()
     this.getUser()
@@ -144,8 +144,8 @@ export default {
     getUser() {
       this.user = JSON.parse(localStorage.getItem("user"))
     },
-    async getClients() {
-      const response = await TicketService.getClients()
+    async getCustomers() {
+      const response = await TicketService.getCustomers()
       this.clients = response.data
     },
     async getServiceCatalogues() {

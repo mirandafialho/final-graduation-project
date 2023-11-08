@@ -3,9 +3,9 @@
 return [
     'paths' => ['api/*', 'sanctum/csrf-cookie', 'api'],
 
-    'allowed_methods' => ['GET, POST, PUT, DELETE'],
+    'allowed_methods' => ['GET, POST, PUT, PATCH, OPTIONS, DELETE'],
 
-    'allowed_origins' => ['http://front.localhost/'],
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 

@@ -8,27 +8,26 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     public function login(Request $request): JsonResponse
     {
         try {
-            $response = Http::asForm()->post(config('services.passport.client_host'), [
-                'grant_type' => 'password',
-                'client_id'  => config('services.passport.client_id'),
-                'client_secret' => config('services.passport.client_secret'),
-                'username' => $request->email,
-                'password' => $request->password,
-            ]);
+            $credentials = $request->only('email', 'password');
 
-            if ($response->status() !== 200) {
-                throw new Exception(code: $response->status());
+            if (Auth::attempt($credentials)) {
+                $user = Auth::user();
+
+                $token = $user->createToken('Token Name')->accessToken;
+
+                return response()->json(['access_token' => $token]);
             }
-
-            return response()->json($response->json());
         } catch (Exception $exception) {
+            Log::error($exception);
+
             match ($exception->getCode()) {
                 400     => $message = 'Invalid Request. Please enter a username or a password.',
                 401     => $message = 'Your credentials are incorrect. Please try again.',

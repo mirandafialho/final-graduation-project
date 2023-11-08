@@ -1,8 +1,8 @@
 import http from "../plugins/axios"
 
 class TicketService {
-    async getClients() {
-        return await http.get("/clients")
+    async getCustomers() {
+        return await http.get("/customers")
     }
 
     async getServiceCatalogues() {
